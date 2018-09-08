@@ -12,9 +12,19 @@ class Iterator {
         Iterator() : current(nullptr) {};
         Iterator(Node<T>* current) : current(current) {};
              
-        Iterator<T> operator=(Iterator<T> other);
-        bool operator!=(Iterator<T> other);
-        T operator*();
+        Iterator<T> operator=(Iterator<T> other)
+        {
+            this -> current = other.current;
+            return *this;
+        };
+        bool operator!=(Iterator<T> other)
+        {
+            return other.current != this -> current;
+        };
+        T operator*()
+        {
+            return this -> current -> data;
+        };
 };  
 
 #endif

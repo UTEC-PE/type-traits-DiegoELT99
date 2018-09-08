@@ -8,7 +8,14 @@ class SListIterator : public Iterator<T> {
     public: 
         SListIterator() : Iterator<T>() {};
         SListIterator(Node<T> *current) : Iterator<T>(current) {};
-        SListIterator<T> operator++();
+        SListIterator<T> operator++()
+                {
+                    if (this -> current)
+                    {
+                        this -> current = this -> current -> next;
+                        return *this;
+                    }
+                };
 };
 
 template <typename Tr>
@@ -21,30 +28,67 @@ class SList {
     private:
         Node<T>* head;
         Operation cmp;
+        int nodes;
               
     public:
-        SList() {
+        SList()
+        {
             head = nullptr;
+            nodes = 0;
         };
 
-        bool find(T search, Node<T> **&pointer) {
-            // TODO
+        bool find(T search, Node<T> **&pointer)
+        {
+            pointer = &head;
+            if(head == nullptr)
+                return false;
+            for(int i = 0; i < nodes; i++)
+            {
+                if (cmp((*pointer) -> data,search))
+                    break;
+                else
+                    pointer = &((*pointer) -> next);
+            }
+            return ((*pointer) -> data == search);
         }
              
-        bool insert(T data) {
-            // TODO
+        bool insert(T data)
+        {
+                Node<T> **pointer;
+                if(find(data,pointer))
+                    return false;
+                else
+                {
+                    Node<T>* NewNode = new Node<T>(data);
+                    NewNode -> next = (*pointer);
+                    (*pointer) = NewNode;
+                }
+                nodes++;
+                return true;
         }
              
-        bool remove(T item) {
-            // TODO
+        bool remove(T item)
+        {
+            Node<T> **pointer = &head;
+            if(!(find(item,pointer)))
+                return false;
+            else
+                {
+                    Node<T>* ByeNode = (*pointer);
+                    (*pointer) = (*pointer) -> next;
+                    delete ByeNode;
+                }
+                nodes--;
+            return true;
         }  
              
         iterator begin() {
-            // TODO
+            return iterator(this -> head);
         }
              
-        iterator end() {
-            // TODO
+        iterator end()
+        {
+            return iterator(nullptr);
         }
              
         ~SList() {
