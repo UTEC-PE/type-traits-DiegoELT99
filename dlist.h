@@ -12,7 +12,7 @@ class DListIterator : public Iterator<T> {
                 {
                     if (this -> current)
                     {
-                        this -> current = this -> current -> next;
+                        this -> current = this -> current -> next; // Y si current es null no retornas nada?
                         return *this;
                     }
                 };
@@ -20,7 +20,7 @@ class DListIterator : public Iterator<T> {
         {
             if (this -> current)
             {
-                this -> current = this -> current -> prev;
+                this -> current = this -> current -> prev; // Y si current es null no retornas nada?
                 return *this;
             }
         };

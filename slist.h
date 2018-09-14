@@ -10,7 +10,7 @@ class SListIterator : public Iterator<T> {
         SListIterator(Node<T> *current) : Iterator<T>(current) {};
         SListIterator<T> operator++()
                 {
-                    if (this -> current)
+                    if (this -> current) // Y si current es null no retornas nada?
                     {
                         this -> current = this -> current -> next;
                         return *this;
